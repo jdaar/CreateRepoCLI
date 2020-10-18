@@ -1,30 +1,37 @@
 import configparser
 import requests
-import json
-import subprocess
-import os
+from json import dumps, loads
+from subprocess import Popen
+from os import getcwd, path
+import sys
 
-CURRENT_PATH = os.getcwd()
+
+CURRENT_PATH = getcwd()
+repositoryName = sys.argv[1]
+
 config = configparser.ConfigParser()
-configPath = os.path.join(CURRENT_PATH,
-                          '/'.join(__file__.split('/')[:-1]),
-                          'config.ini')
+configPath = path.join(CURRENT_PATH,
+                       '/'.join(__file__.split('/')[:-1]),
+                       'config.ini')
 config.read(configPath)
 
 if ('AUTH' not in config.sections()):
     config.add_section('AUTH')
+
 if ('TOKEN' not in config['AUTH']):
+
     while True:
         AUTH_TOKEN = input('Please enter an authorization token: ')
         if (len(AUTH_TOKEN) > 39):
             break
         else:
             continue
+
     config['AUTH']['TOKEN'] = AUTH_TOKEN
+
     with open(configPath, 'w+') as configFile:
         config.write(configFile)
 
-repositoryName = input('Repository name: ')
 
 payload = {
     "name": repositoryName,
@@ -38,7 +45,7 @@ payload = {
 }
 
 githubRequest = requests.post('https://api.github.com/user/repos',
-                              data=json.dumps(payload),
+                              data=dumps(payload),
                               headers={
                                   'Authorization': f"token {config['AUTH']['TOKEN']}",
                                   'Content-Type': "application/json",
@@ -46,6 +53,6 @@ githubRequest = requests.post('https://api.github.com/user/repos',
                               }
                               )
 
-sshUrl = json.loads(githubRequest.content.decode('utf8'))['ssh_url']
+sshUrl = loads(githubRequest.content.decode('utf8'))['ssh_url']
 
-subprocess.Popen(["git", "clone", sshUrl])
+Popen(["git", "clone", sshUrl])
