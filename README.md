@@ -4,7 +4,7 @@ This is a little python script that'll help you to get up and going when develop
 
 ## How to use
 
-_You'll have to add it to your path, if you dont know how to [here](https://stackoverflow.com/questions/6967331/how-do-i-install-a-script-to-run-anywhere-from-the-command-line) is a guide on how to_
+_You'll have to add it to your path, if you dont know how to [here](https://stackoverflow.com/questions/6967331/how-do-i-install-a-script-to-run-anywhere-from-the-command-line) is a guide that explains it_
 
 Usage is very simple, just execute the script and give it a project name
 
