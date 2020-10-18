@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import configparser
 import requests
 from json import dumps, loads
