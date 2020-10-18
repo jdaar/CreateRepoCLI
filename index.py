@@ -2,9 +2,12 @@ import configparser
 import requests
 import json
 import subprocess
+import os
 
+CURRENT_PATH = os.getcwd()
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(os.path.join(CURRENT_PATH,
+                         '/'.join(__file__.split('/')[:-1]), 'config.ini'))
 
 if ('AUTH' not in config.sections()):
     config.add_section('AUTH')
@@ -39,10 +42,14 @@ githubRequest = requests.post('https://api.github.com/user/repos',
                                   'Accept': "application/json"
                               }
                               )
-
 sshUrl = json.loads(githubRequest.content.decode('utf8'))['ssh_url']
 
+workingDir = os.path.join(CURRENT_PATH, repositoryName)
+print(__file__)
+
+
 """ WIP
+subprocess.Popen(["mkdir", workingDir])
 subprocess.Popen(["mkdir", repositoryName])
 subprocess.Popen(["git", "-C", repositoryName, "init"])
 subprocess.Popen(["git", "-C", repositoryName,
