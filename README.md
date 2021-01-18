@@ -9,8 +9,8 @@ _You'll have to add it to your path, if you dont know how to [here](https://stac
 Usage is very simple, just execute the script and give it a project name
 
 ```bash
-repo.py <Name>
+repo <Name>
 
 # Example
-repo.py ReactApp
+repo ReactApp
 ```
